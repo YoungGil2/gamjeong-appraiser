@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 import { NextRequest } from 'next/server';
-import { supabase } from '@/shared/lib/supabase/client';
+import { supabaseServer } from '@/shared/lib/supabase/server';
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -55,7 +55,7 @@ export const POST = async (request: NextRequest) => {
 
     const raw = completion.choices[0].message.content ?? '';
     const result = JSON.parse(raw);
-    await supabase.from('analyses').insert({
+    const { error: dbError } = await supabaseServer.from('analyses').insert({
       context,
       original_text: text,
       summary: result.summary,
@@ -67,6 +67,7 @@ export const POST = async (request: NextRequest) => {
       result_warm: result.warm,
       result_concise: result.concise,
     });
+    if (dbError) console.error('[supabase insert]', dbError);
 
     return Response.json(result);
   } catch (err) {
