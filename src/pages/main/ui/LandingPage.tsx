@@ -143,11 +143,6 @@ const LandingPage = () => {
           </Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-zinc-100 px-6 py-8 text-center text-xs text-zinc-400">
-        © 2026 감정평가사. AI 커뮤니케이션 도구.
-      </footer>
     </main>
   );
 };

@@ -1,5 +1,6 @@
 export type Analysis = {
   id: string;
+  user_id: string | null;
   context: string;
   original_text: string;
   summary: string | null;

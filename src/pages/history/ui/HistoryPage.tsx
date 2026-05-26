@@ -1,6 +1,7 @@
-import { supabaseServer } from '@/shared/lib/supabase/server';
+import { createSupabaseServer } from '@/shared/lib/supabase/server';
+import { supabaseAdmin } from '@/shared/lib/supabase/server';
 import type { Analysis } from '@/shared/lib/supabase/types';
-import console from 'console';
+import AuthButton from '@/widgets/header/ui/AuthButton';
 
 const CONTEXT_LABELS: Record<string, string> = {
   boss: '상사·임원',
@@ -61,9 +62,29 @@ const AnalysisCard = ({ item }: { item: Analysis }) => {
 };
 
 const HistoryPage = async () => {
-  const { data: analyses, error } = await supabaseServer
+  const supabase = await createSupabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return (
+      <main className="mx-auto w-full max-w-2xl px-6 py-12">
+        <div className="mb-8">
+          <h1 className="mb-2 text-2xl font-bold tracking-tight text-zinc-900">분석 내역</h1>
+        </div>
+        <div className="flex flex-col items-center gap-6 py-20 text-center">
+          <p className="text-sm text-zinc-500">내 분석 내역을 보려면 로그인이 필요해요.</p>
+          <AuthButton userName={null} />
+        </div>
+      </main>
+    );
+  }
+
+  const { data: analyses, error } = await supabaseAdmin
     .from('analyses')
     .select('*')
+    .eq('user_id', user.id)
     .order('created_at', { ascending: false })
     .limit(20);
 

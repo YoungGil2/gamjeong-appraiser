@@ -1,6 +1,8 @@
 import OpenAI from 'openai';
 import { NextRequest } from 'next/server';
-import { supabaseServer } from '@/shared/lib/supabase/server';
+import { createSupabaseServer } from '@/shared/lib/supabase/server';
+import { supabaseAdmin } from '@/shared/lib/supabase/server';
+import console from 'console';
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -55,19 +57,29 @@ export const POST = async (request: NextRequest) => {
 
     const raw = completion.choices[0].message.content ?? '';
     const result = JSON.parse(raw);
-    const { error: dbError } = await supabaseServer.from('analyses').insert({
-      context,
-      original_text: text,
-      summary: result.summary,
-      warmth_score: result.scores?.warmth,
-      formality_score: result.scores?.formality,
-      directness_score: result.scores?.directness,
-      confidence_score: result.scores?.confidence,
-      result_professional: result.professional,
-      result_warm: result.warm,
-      result_concise: result.concise,
-    });
-    if (dbError) console.error('[supabase insert]', dbError);
+
+    // 로그인 사용자만 내역 저장
+    const supabase = await createSupabaseServer();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const { error: dbError } = await supabaseAdmin.from('analyses').insert({
+        user_id: user.id,
+        context,
+        original_text: text,
+        summary: result.summary,
+        warmth_score: result.scores?.warmth,
+        formality_score: result.scores?.formality,
+        directness_score: result.scores?.directness,
+        confidence_score: result.scores?.confidence,
+        result_professional: result.professional,
+        result_warm: result.warm,
+        result_concise: result.concise,
+      });
+      if (dbError) console.error('[supabase insert]', dbError);
+    }
 
     return Response.json(result);
   } catch (err) {
