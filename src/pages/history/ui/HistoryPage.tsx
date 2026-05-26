@@ -1,5 +1,6 @@
-import { supabase } from '@/shared/lib/supabase/client';
+import { supabaseServer } from '@/shared/lib/supabase/server';
 import type { Analysis } from '@/shared/lib/supabase/types';
+import console from 'console';
 
 const CONTEXT_LABELS: Record<string, string> = {
   boss: '상사·임원',
@@ -60,7 +61,7 @@ const AnalysisCard = ({ item }: { item: Analysis }) => {
 };
 
 const HistoryPage = async () => {
-  const { data: analyses, error } = await supabase
+  const { data: analyses, error } = await supabaseServer
     .from('analyses')
     .select('*')
     .order('created_at', { ascending: false })
