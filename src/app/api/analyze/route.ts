@@ -52,26 +52,22 @@ export const POST = async (request: NextRequest) => {
 
     // 로그인 사용자만 내역 저장
     const supabase = await createSupabaseServer();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    if (user) {
-      const { error: dbError } = await supabase.from('analyses').insert({
-        user_id: user.id,
-        context,
-        original_text: text,
-        summary: result.summary,
-        warmth_score: result.scores?.warmth,
-        formality_score: result.scores?.formality,
-        directness_score: result.scores?.directness,
-        confidence_score: result.scores?.confidence,
-        result_professional: result.professional,
-        result_warm: result.warm,
-        result_concise: result.concise,
-      });
-      if (dbError) console.error('[supabase insert]', dbError);
-    }
+    const { error: dbError } = await supabase.from('analyses').insert({
+      user_id: user?.id ?? null,
+      context,
+      original_text: text,
+      summary: result.summary,
+      warmth_score: result.scores?.warmth,
+      formality_score: result.scores?.formality,
+      directness_score: result.scores?.directness,
+      confidence_score: result.scores?.confidence,
+      result_professional: result.professional,
+      result_warm: result.warm,
+      result_concise: result.concise,
+    });
+    if (dbError) console.error('[supabase insert]', dbError);
 
     return Response.json(result);
   } catch (err) {
