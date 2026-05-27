@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { CONTEXT_OPTIONS, TONE_AXIS_LABELS, type ContextId } from "../model/constants";
+import { useState } from 'react';
+import { CONTEXT_OPTIONS, TONE_AXIS_LABELS, type ContextId } from '@/entities/analysis/config/constants';
 
 type AnalysisResult = {
   summary: string;
@@ -10,7 +10,6 @@ type AnalysisResult = {
   warm: string;
   concise: string;
 };
-
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false);
@@ -26,14 +25,14 @@ const CopyButton = ({ text }: { text: string }) => {
       onClick={handleCopy}
       className="rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-700"
     >
-      {copied ? "복사됨 ✓" : "복사"}
+      {copied ? '복사됨 ✓' : '복사'}
     </button>
   );
 };
 
 const AnalyzePage = () => {
   const [selectedContext, setSelectedContext] = useState<ContextId | null>(null);
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
 
@@ -44,16 +43,16 @@ const AnalyzePage = () => {
     setIsLoading(true);
     setResult(null);
     try {
-      const res = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ context: selectedContext, text: inputText }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "분석에 실패했습니다.");
+      if (!res.ok) throw new Error(data.error ?? '분석에 실패했습니다.');
       setResult(data);
     } catch (err) {
-      alert(err instanceof Error ? err.message : "오류가 발생했습니다.");
+      alert(err instanceof Error ? err.message : '오류가 발생했습니다.');
     } finally {
       setIsLoading(false);
     }
@@ -62,12 +61,8 @@ const AnalyzePage = () => {
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-12">
       <div className="mb-10">
-        <h1 className="mb-2 text-2xl font-bold tracking-tight text-zinc-900">
-          내 문장 분석하기
-        </h1>
-        <p className="text-sm text-zinc-500">
-          보내는 대상을 선택하고 문장을 입력하면 톤을 분석해드려요
-        </p>
+        <h1 className="mb-2 text-2xl font-bold tracking-tight text-zinc-900">내 문장 분석하기</h1>
+        <p className="text-sm text-zinc-500">보내는 대상을 선택하고 문장을 입력하면 톤을 분석해드려요</p>
       </div>
 
       {/* Context selector */}
@@ -80,8 +75,8 @@ const AnalyzePage = () => {
               onClick={() => setSelectedContext(id)}
               className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                 selectedContext === id
-                  ? "border-violet-600 bg-violet-600 text-white"
-                  : "border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300"
+                  ? 'border-violet-600 bg-violet-600 text-white'
+                  : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300'
               }`}
             >
               {label}
@@ -109,7 +104,7 @@ const AnalyzePage = () => {
         disabled={!canAnalyze || isLoading}
         className="w-full rounded-full bg-violet-600 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        {isLoading ? "분석 중…" : "분석하기"}
+        {isLoading ? '분석 중…' : '분석하기'}
       </button>
 
       {/* Results */}
@@ -139,24 +134,35 @@ const AnalyzePage = () => {
           </div>
 
           {/* Summary */}
-          <div className="rounded-xl bg-zinc-50 px-5 py-4 text-sm leading-relaxed text-zinc-600">
-            {result.summary}
-          </div>
+          <div className="rounded-xl bg-zinc-50 px-5 py-4 text-sm leading-relaxed text-zinc-600">{result.summary}</div>
 
           {/* Refined versions */}
           <div>
             <h2 className="mb-4 text-base font-semibold text-zinc-900">다듬은 버전</h2>
             <div className="space-y-3">
               {[
-                { label: "프로페셔널하게", text: result.professional, badge: "bg-blue-100 text-blue-700", border: "border-blue-100" },
-                { label: "따뜻하고 친근하게", text: result.warm, badge: "bg-orange-100 text-orange-700", border: "border-orange-100" },
-                { label: "간결하고 직접적으로", text: result.concise, badge: "bg-zinc-100 text-zinc-600", border: "border-zinc-200" },
+                {
+                  label: '프로페셔널하게',
+                  text: result.professional,
+                  badge: 'bg-blue-100 text-blue-700',
+                  border: 'border-blue-100',
+                },
+                {
+                  label: '따뜻하고 친근하게',
+                  text: result.warm,
+                  badge: 'bg-orange-100 text-orange-700',
+                  border: 'border-orange-100',
+                },
+                {
+                  label: '간결하고 직접적으로',
+                  text: result.concise,
+                  badge: 'bg-zinc-100 text-zinc-600',
+                  border: 'border-zinc-200',
+                },
               ].map(({ label, text, badge, border }) => (
                 <div key={label} className={`rounded-xl border ${border} bg-white p-4`}>
                   <div className="mb-2 flex items-center justify-between">
-                    <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${badge}`}>
-                      {label}
-                    </span>
+                    <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${badge}`}>{label}</span>
                     <CopyButton text={text} />
                   </div>
                   <p className="text-sm leading-relaxed text-zinc-700">{text}</p>

@@ -2,16 +2,9 @@ import OpenAI from 'openai';
 import { NextRequest } from 'next/server';
 import { createSupabaseServer } from '@/shared/lib/supabase/server';
 import { supabaseAdmin } from '@/shared/lib/supabase/server';
-import console from 'console';
+import { CONTEXT_LABELS } from '@/entities/analysis/config/constants';
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-const CONTEXT_LABELS: Record<string, string> = {
-  boss: '상사나 임원',
-  client: '고객이나 클라이언트',
-  teammate: '팀원이나 동료',
-  partner: '외부 파트너',
-};
 
 export const POST = async (request: NextRequest) => {
   const { context, text } = await request.json();
@@ -20,7 +13,7 @@ export const POST = async (request: NextRequest) => {
     return Response.json({ error: 'context와 text는 필수입니다.' }, { status: 400 });
   }
 
-  const contextLabel = CONTEXT_LABELS[context] ?? context;
+  const contextLabel = CONTEXT_LABELS[context as keyof typeof CONTEXT_LABELS] ?? context;
 
   try {
     const completion = await client.chat.completions.create({

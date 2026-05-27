@@ -19,9 +19,7 @@ const Header = async () => {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-lg font-semibold tracking-tight text-zinc-900">감정평가사</span>
-          <span className="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700">
-            beta
-          </span>
+          <span className="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700">beta</span>
         </Link>
 
         <nav className="flex items-center gap-6 text-sm text-zinc-500">

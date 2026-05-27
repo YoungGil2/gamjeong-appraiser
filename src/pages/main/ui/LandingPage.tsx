@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { PAIN_POINTS, TONE_AXES, STEPS, REFINE_STYLES } from "../model/constants";
+import Link from 'next/link';
+import { PAIN_POINTS, TONE_AXES, STEPS, REFINE_STYLES } from '../model/constants';
 
 const LandingPage = () => {
   return (
@@ -56,9 +56,7 @@ const LandingPage = () => {
       {/* How it works */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="mb-12 text-center text-2xl font-bold tracking-tight text-zinc-900">
-            3단계로 끝납니다
-          </h2>
+          <h2 className="mb-12 text-center text-2xl font-bold tracking-tight text-zinc-900">3단계로 끝납니다</h2>
           <div className="grid gap-8 sm:grid-cols-3">
             {STEPS.map(({ step, title, description }) => (
               <div key={step} className="flex flex-col gap-3">
@@ -74,18 +72,13 @@ const LandingPage = () => {
       {/* Tone axes */}
       <section className="bg-zinc-950 px-6 py-20 text-white">
         <div className="mx-auto max-w-4xl">
-          <h2 className="mb-3 text-center text-2xl font-bold tracking-tight">
-            4가지 축으로 분석합니다
-          </h2>
+          <h2 className="mb-3 text-center text-2xl font-bold tracking-tight">4가지 축으로 분석합니다</h2>
           <p className="mb-12 text-center text-sm text-zinc-400">
             단순한 맞춤법 교정이 아닌 커뮤니케이션 의도를 파악합니다
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
             {TONE_AXES.map(({ label, description, icon }) => (
-              <div
-                key={label}
-                className="rounded-xl border border-zinc-800 bg-zinc-900 p-5"
-              >
+              <div key={label} className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
                 <div className="mb-3 flex items-center gap-3">
                   <span className="text-2xl">{icon}</span>
                   <span className="font-semibold text-zinc-100">{label}</span>
@@ -106,20 +99,14 @@ const LandingPage = () => {
           <h2 className="mb-3 text-center text-2xl font-bold tracking-tight text-zinc-900">
             3가지 버전으로 다듬어드립니다
           </h2>
-          <p className="mb-12 text-center text-sm text-zinc-500">
-            원하는 스타일을 골라서 바로 복사하세요
-          </p>
+          <p className="mb-12 text-center text-sm text-zinc-500">원하는 스타일을 골라서 바로 복사하세요</p>
           <div className="grid gap-4 sm:grid-cols-3">
             {REFINE_STYLES.map(({ label, example, color, badge }) => (
               <div key={label} className={`rounded-xl border p-5 ${color}`}>
-                <span
-                  className={`mb-3 inline-block rounded-full px-2.5 py-1 text-xs font-medium ${badge}`}
-                >
+                <span className={`mb-3 inline-block rounded-full px-2.5 py-1 text-xs font-medium ${badge}`}>
                   {label}
                 </span>
-                <p className="text-sm leading-relaxed text-zinc-700">
-                  &ldquo;{example}&rdquo;
-                </p>
+                <p className="text-sm leading-relaxed text-zinc-700">&ldquo;{example}&rdquo;</p>
               </div>
             ))}
           </div>
@@ -129,12 +116,8 @@ const LandingPage = () => {
       {/* CTA */}
       <section className="bg-violet-600 px-6 py-20 text-center text-white">
         <div className="mx-auto max-w-2xl">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight">
-            지금 바로 내 문장을 분석해보세요
-          </h2>
-          <p className="mb-8 text-violet-200">
-            분석부터 다듬기까지 30초면 끝납니다.
-          </p>
+          <h2 className="mb-4 text-3xl font-bold tracking-tight">지금 바로 내 문장을 분석해보세요</h2>
+          <p className="mb-8 text-violet-200">분석부터 다듬기까지 30초면 끝납니다.</p>
           <Link
             href="/analyze"
             className="inline-block rounded-full bg-white px-8 py-3 text-sm font-semibold text-violet-700 shadow-sm transition-colors hover:bg-violet-50"

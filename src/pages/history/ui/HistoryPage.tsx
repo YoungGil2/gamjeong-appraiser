@@ -3,12 +3,7 @@ import { supabaseAdmin } from '@/shared/lib/supabase/server';
 import type { Analysis } from '@/shared/lib/supabase/types';
 import AuthButton from '@/widgets/header/ui/AuthButton';
 
-const CONTEXT_LABELS: Record<string, string> = {
-  boss: '상사·임원',
-  client: '고객·클라이언트',
-  teammate: '팀원·동료',
-  partner: '외부 파트너',
-};
+import { CONTEXT_SHORT_LABELS } from '@/entities/analysis/config/constants';
 
 const SCORE_KEYS: { key: keyof Analysis; label: string }[] = [
   { key: 'warmth_score', label: '따뜻함' },
@@ -39,7 +34,7 @@ const AnalysisCard = ({ item }: { item: Analysis }) => {
     <div className="rounded-xl border border-zinc-200 bg-white p-5">
       <div className="mb-3 flex items-center justify-between">
         <span className="rounded-full bg-violet-100 px-2.5 py-1 text-xs font-medium text-violet-700">
-          {CONTEXT_LABELS[item.context] ?? item.context}
+          {CONTEXT_SHORT_LABELS[item.context as keyof typeof CONTEXT_SHORT_LABELS] ?? item.context}
         </span>
         <span className="text-xs text-zinc-400">{date}</span>
       </div>

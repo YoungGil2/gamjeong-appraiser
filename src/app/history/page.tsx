@@ -1,4 +1,4 @@
-import HistoryPage from "@/pages/history/ui/HistoryPage";
+import HistoryPage from '@/pages/history/ui/HistoryPage';
 
 const Page = () => <HistoryPage />;
 
