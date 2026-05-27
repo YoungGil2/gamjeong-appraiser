@@ -18,6 +18,9 @@ export const createSupabaseServer = async () => {
   });
 };
 
+console.log('[supabase/server] NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL ? 'OK' : 'MISSING');
+console.log('[supabase/server] SUPABASE_SERVICE_ROLE_KEY:', process.env.SUPABASE_SERVICE_ROLE_KEY ? 'OK' : 'MISSING');
+
 // 서비스 롤 클라이언트 (RLS 우회, DB 직접 조작용)
 export const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
