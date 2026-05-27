@@ -17,7 +17,7 @@ const LandingPage = () => {
             <span className="text-violet-600">내 문장의 온도</span>를 확인하세요
           </h1>
           <p className="mb-10 text-lg leading-relaxed text-zinc-500">
-            내 글이 상대방에게 차갑게 들릴지, 너무 격식 차린 건지 —
+            내 글이 상대방에게 차갑게 들릴지, 너무 격식 차린 건지
             <br className="hidden sm:block" />
             컨텍스트에 맞게 분석하고 3가지 버전으로 다듬어드립니다
           </p>
@@ -60,7 +60,7 @@ const LandingPage = () => {
           <div className="grid gap-8 sm:grid-cols-3">
             {STEPS.map(({ step, title, description }) => (
               <div key={step} className="flex flex-col gap-3">
-                <span className="text-3xl font-bold text-violet-200">{step}</span>
+                <span className="text-3xl font-bold text-violet-500">{step}</span>
                 <h3 className="text-base font-semibold text-zinc-900">{title}</h3>
                 <p className="text-sm leading-relaxed text-zinc-500">{description}</p>
               </div>

@@ -32,7 +32,7 @@ export const STEPS = [
   {
     step: '01',
     title: '컨텍스트 설정',
-    description: '상사에게, 고객에게, 팀원에게 — 보내는 대상을 먼저 선택하세요',
+    description: '상사에게, 고객에게, 팀원에게 보내는 대상을 먼저 선택하세요',
   },
   {
     step: '02',

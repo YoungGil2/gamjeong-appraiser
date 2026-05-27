@@ -1,7 +1,6 @@
 import OpenAI from 'openai';
 import { NextRequest } from 'next/server';
 import { createSupabaseServer } from '@/shared/lib/supabase/server';
-import { supabaseAdmin } from '@/shared/lib/supabase/server';
 import { CONTEXT_LABELS } from '@/entities/analysis/config/constants';
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -58,7 +57,7 @@ export const POST = async (request: NextRequest) => {
     } = await supabase.auth.getUser();
 
     if (user) {
-      const { error: dbError } = await supabaseAdmin.from('analyses').insert({
+      const { error: dbError } = await supabase.from('analyses').insert({
         user_id: user.id,
         context,
         original_text: text,

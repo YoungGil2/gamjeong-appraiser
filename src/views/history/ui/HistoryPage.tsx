@@ -1,8 +1,6 @@
 import { createSupabaseServer } from '@/shared/lib/supabase/server';
-import { supabaseAdmin } from '@/shared/lib/supabase/server';
 import type { Analysis } from '@/shared/lib/supabase/types';
 import AuthButton from '@/widgets/header/ui/AuthButton';
-
 import { CONTEXT_SHORT_LABELS } from '@/entities/analysis/config/constants';
 
 const SCORE_KEYS: { key: keyof Analysis; label: string }[] = [
@@ -76,7 +74,7 @@ const HistoryPage = async () => {
     );
   }
 
-  const { data: analyses, error } = await supabaseAdmin
+  const { data: analyses, error } = await supabase
     .from('analyses')
     .select('*')
     .eq('user_id', user.id)

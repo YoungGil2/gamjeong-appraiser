@@ -1,4 +1,4 @@
-import AnalyzePage from '@/pages/analyze/ui/AnalyzePage';
+import AnalyzePage from '@/views/analyze/ui/AnalyzePage';
 
 const Page = () => <AnalyzePage />;
 
