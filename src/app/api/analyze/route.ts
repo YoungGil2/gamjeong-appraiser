@@ -3,9 +3,8 @@ import { NextRequest } from 'next/server';
 import { createSupabaseServer } from '@/shared/lib/supabase/server';
 import { CONTEXT_LABELS } from '@/entities/analysis/config/constants';
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 export const POST = async (request: NextRequest) => {
+  const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const { context, text } = await request.json();
 
   if (!context || !text?.trim()) {
