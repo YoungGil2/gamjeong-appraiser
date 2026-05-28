@@ -4,6 +4,7 @@ import { createSupabaseServer } from '@/shared/lib/supabase/server';
 import { CONTEXT_LABELS } from '@/entities/analysis/config/constants';
 
 export const POST = async (request: NextRequest) => {
+  console.log('[env] OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY, '/ prefix:', process.env.OPENAI_API_KEY?.slice(0, 10));
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const { context, text } = await request.json();
 
