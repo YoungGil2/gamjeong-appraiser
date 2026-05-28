@@ -48,6 +48,8 @@ export const POST = async (request: NextRequest) => {
     console.log('check log 1', completion);
 
     const raw = completion.choices[0].message.content ?? '';
+    console.log('[analyze] raw response:', raw);
+    if (!raw) throw new Error('OpenAI returned empty response');
     const result = JSON.parse(raw);
 
     // 로그인 사용자만 내역 저장
