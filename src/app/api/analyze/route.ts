@@ -46,14 +46,17 @@ export const POST = async (request: NextRequest) => {
         },
       ],
     });
+    console.log('check log 1', completion);
 
     const raw = completion.choices[0].message.content ?? '';
     const result = JSON.parse(raw);
 
     // 로그인 사용자만 내역 저장
     const supabase = await createSupabaseServer();
-    const { data: { user } } = await supabase.auth.getUser();
-
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    console.log('check log 2 ', user);
     const { error: dbError } = await supabase.from('analyses').insert({
       user_id: user?.id ?? null,
       context,
@@ -67,6 +70,7 @@ export const POST = async (request: NextRequest) => {
       result_warm: result.warm,
       result_concise: result.concise,
     });
+    console.log('check log 3', dbError);
     if (dbError) console.error('[supabase insert]', dbError);
 
     return Response.json(result);
